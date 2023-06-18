@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "quotes-site"
+version = "0.1.0"
+description = ""
+authors = ["Evgenius87 <plotnikov.evgenij@ukr.net>"]
+readme = "README.md"
+packages = [{include = "quotes_site"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2.2"
+pymongo = {extras = ["srv", "tls"], version = "^4.3.3"}
+psycopg2 = "^2.9.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

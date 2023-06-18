@@ -1,0 +1,64 @@
+{% extends 'quotes/base.html' %}
+{% load extract %}
+
+{% block content %} 
+{% if user.is_authenticated%}
+<p>
+    <a href="{% url 'quotes:create_new_quote' %}" class="btn btn-primary">Create New Quote</a>
+</p>
+{% endif %}
+<div class="row">
+    <div class="col-md-8">
+        {% for quote in quotes %}
+    <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+        <span class="text" itemprop="text">
+            {{quote.quote}}
+        </span>
+        <span>by <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+    <a href="{% url 'quotes:about_author' quote.author.id %}">(about)</a>
+    </span>
+        <div class="tags">
+            Tags:
+            {% for tag in quote.tags.all %} 
+            <a class="tag" href="/tag/{{tag}}">{{tag}}</a>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <nav>
+        <ul class="pager">
+            
+            <li class="previous">
+                {% if quotes.has_previous %}
+                    <a href="{% url 'quotes:root_paginate' quotes.previous_page_number %}">
+                        <span aria-hidden="true">←</span> Previous
+                    </a>
+                {% else %}
+                    <a class="disabled" href="#">
+                        <span aria-hidden="true">←</span> Previous
+                    </a>
+                {% endif %}
+            </li>
+            
+            <li class="next">
+                {% if quotes.has_next %}
+                    <a href="{% url 'quotes:root_paginate' quotes.next_page_number %}">
+                        Next <span aria-hidden="true">→</span>
+                    </a>
+                {% else %}
+                    <a class="disabled" href="#">
+                        Next <span aria-hidden="true">→</span>
+                    </a>
+                {% endif %}
+            </li>
+            
+        </ul>
+    </nav>
+    </div>
+
+</div>
+
+{% endblock %}
